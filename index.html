@@ -67,19 +67,14 @@
             }
         }
 
-        /* Keyframe for pulse animation on arrows */
-        @keyframes pulse-arrow {
-            0%, 100% {
-                opacity: 0.7;
-                transform: scale(1);
+        /* Keyframe for path drawing animation */
+        @keyframes draw-path {
+            0% {
+                stroke-dashoffset: var(--path-length);
             }
-            50% {
-                opacity: 1;
-                transform: scale(1.1);
+            100% {
+                stroke-dashoffset: 0;
             }
-        }
-        .animate-pulse-arrow {
-            animation: pulse-arrow 2s infinite ease-in-out;
         }
 
         /* Styling for the icon container within the tile */
@@ -92,11 +87,9 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for the icon */
         }
 
-        /* Specific styles for lifecycle arrows to allow JS control */
-        .lifecycle-arrow {
-            position: absolute; /* Position arrows absolutely for precise control */
-            z-index: 10; /* Ensure arrows are above tiles if needed */
-            transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Smooth transitions */
+        /* Specific styles for lifecycle tiles */
+        .lifecycle-tile {
+            min-height: 240px; /* Ensures consistent height for aesthetic alignment */
         }
     </style>
 </head>
@@ -196,7 +189,16 @@
             <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-8 border-b-4 border-blue-400 pb-3 text-center">The Data Engineering Lifecycle</h2>
 
             <div id="lifecycle-container" class="flex flex-wrap justify-center items-center gap-y-8 gap-x-4 relative">
-                <!-- Tiles and Arrows will be dynamically inserted here by JavaScript -->
+                <!-- Single SVG for the animated path -->
+                <svg id="flow-path-svg" class="absolute top-0 left-0 w-full h-full pointer-events-none" style="overflow: visible;">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6" />
+                        </marker>
+                    </defs>
+                    <path id="flow-path" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-start="url(#arrowhead)"></path>
+                </svg>
+                <!-- Tiles will be dynamically inserted here by JavaScript -->
             </div>
         </section>
 
@@ -249,13 +251,72 @@
         ];
 
         const container = document.getElementById('lifecycle-container');
-        const arrows = []; // Store references to arrows
 
+        // Function to draw and animate the single flow path
+        function drawFlowPath() {
+            const pathElement = document.getElementById('flow-path');
+            const tiles = Array.from(document.querySelectorAll('.lifecycle-tile'));
+            const containerRect = container.getBoundingClientRect();
+
+            if (tiles.length === 0) {
+                pathElement.setAttribute('d', ''); // Clear path if no tiles
+                return;
+            }
+
+            let pathData = "";
+            let prevIconCenterX, prevIconCenterY;
+            const curveOffset = 30; // Increased offset for more pronounced curves
+
+            tiles.forEach((tile, index) => {
+                const iconContainer = tile.querySelector('.icon-container');
+                if (!iconContainer) return; // Skip if icon container not found
+
+                const iconRect = iconContainer.getBoundingClientRect();
+
+                // Calculate center of the icon container relative to the lifecycle-container
+                const currentIconCenterX = (iconRect.left + iconRect.right) / 2 - containerRect.left;
+                const currentIconCenterY = (iconRect.top + iconRect.bottom) / 2 - containerRect.top;
+
+                if (index === 0) {
+                    pathData = `M ${currentIconCenterX} ${currentIconCenterY}`;
+                } else {
+                    // Determine if the previous and current tile are on roughly the same horizontal line
+                    // This threshold might need fine-tuning based on your exact layout and gaps
+                    const isHorizontal = Math.abs(prevIconCenterY - currentIconCenterY) < 60; // Increased threshold for robustness
+
+                    if (isHorizontal) {
+                        // Horizontal connection: use a quadratic Bezier curve
+                        const controlX = (prevIconCenterX + currentIconCenterX) / 2;
+                        // Alternate curve direction for visual interest
+                        const controlY = prevIconCenterY + (index % 2 === 0 ? curveOffset : -curveOffset);
+                        pathData += ` Q ${controlX} ${controlY}, ${currentIconCenterX} ${currentIconCenterY}`;
+                    } else {
+                        // Vertical/wrapping connection: use a straight line for clarity
+                        // For a more complex wrap curve, more segments (L and Q) would be needed here.
+                        pathData += ` L ${currentIconCenterX} ${currentIconCenterY}`;
+                    }
+                }
+
+                prevIconCenterX = currentIconCenterX;
+                prevIconCenterY = currentIconCenterY;
+            });
+
+            pathElement.setAttribute('d', pathData);
+
+            // Animate the path
+            const length = pathElement.getTotalLength();
+            pathElement.style.strokeDasharray = length;
+            pathElement.style.strokeDashoffset = length;
+            pathElement.style.animation = 'none'; // Reset animation
+            void pathElement.offsetWidth; // Trigger reflow
+            pathElement.style.setProperty('--path-length', length); // Set CSS variable for animation
+            pathElement.style.animation = `draw-path 4s ease-in-out infinite`; // Adjust duration as needed
+        }
+
+        // Dynamically add tiles
         dataEngineeringSteps.forEach((step, index) => {
-            // Create tile element
             const tile = document.createElement('div');
-            // Updated width and added min-height for consistent sizing
-            tile.className = 'relative w-full sm:w-[280px] p-6 pt-10 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-start text-left lifecycle-tile min-h-[240px]';
+            tile.className = 'relative w-full sm:w-[280px] p-6 pt-10 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-start text-left lifecycle-tile';
             tile.innerHTML = `
                 <div class="icon-container absolute top-0 left-0 transform -translate-x-3/4 -translate-y-1/2 w-20 h-20 text-blue-600 border-2 border-blue-300">
                     ${step.iconSvg}
@@ -264,95 +325,17 @@
                 <p class="text-slate-700 text-sm leading-relaxed">${step.description}</p>
             `;
             container.appendChild(tile);
-
-            // Add arrow if not the last step
-            if (index < dataEngineeringSteps.length - 1) {
-                const arrowContainer = document.createElement('div');
-                arrowContainer.className = 'flex items-center justify-center w-full md:w-auto my-4 md:my-0 lifecycle-arrow';
-                arrowContainer.innerHTML = `
-                    <svg class="w-10 h-10 text-blue-600 animate-pulse-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                `;
-                container.appendChild(arrowContainer);
-                arrows.push({ arrowElement: arrowContainer, prevTile: tile }); // Store arrow and its preceding tile
-            }
         });
 
-        // Function to update arrow positions and rotations
-        function updateArrowPositions() {
-            const containerRect = container.getBoundingClientRect(); // Get container's position once
-
-            arrows.forEach((arrowData, index) => {
-                const prevTile = arrowData.prevTile;
-                // nextElementSibling might be another arrow, so find the next actual tile
-                let nextTile = prevTile.nextElementSibling;
-                while (nextTile && !nextTile.classList.contains('lifecycle-tile')) {
-                    nextTile = nextTile.nextElementSibling;
-                }
-
-                if (!nextTile) {
-                    // If there's no next tile, hide the arrow
-                    arrowData.arrowElement.style.display = 'none';
-                    return;
-                } else {
-                    arrowData.arrowElement.style.display = 'flex'; // Ensure it's visible
-                }
-
-                const prevRect = prevTile.getBoundingClientRect();
-                const nextRect = nextTile.getBoundingClientRect();
-                const arrowElement = arrowData.arrowElement;
-
-                // Calculate centers relative to the lifecycle-container
-                const prevCenterX = (prevRect.left + prevRect.right) / 2 - containerRect.left;
-                const prevCenterY = (prevRect.top + prevRect.bottom) / 2 - containerRect.top;
-                const nextCenterX = (nextRect.left + nextRect.right) / 2 - containerRect.left;
-                const nextCenterY = (nextRect.top + nextRect.bottom) / 2 - containerRect.top;
-
-                let startX, startY, endX, endY;
-                let angle = 0;
-
-                // Determine if layout is horizontal (desktop) or vertical (mobile)
-                // Check if the next tile is roughly on the same horizontal line
-                const isHorizontalLayout = Math.abs(prevRect.top - nextRect.top) < 50; // Threshold for "same row"
-
-                if (isHorizontalLayout) {
-                    // Horizontal flow: from right of current tile to left of next tile
-                    startX = prevRect.right - containerRect.left;
-                    startY = prevCenterY;
-                    endX = nextRect.left - containerRect.left;
-                    endY = nextCenterY;
-                } else {
-                    // Vertical flow: from bottom of current tile to top of next tile
-                    startX = prevCenterX;
-                    startY = prevRect.bottom - containerRect.top;
-                    endX = nextCenterX;
-                    endY = nextRect.top - containerRect.top;
-                }
-
-                // Calculate the midpoint for the arrow's position
-                const arrowCenterX = (startX + endX) / 2;
-                const arrowCenterY = (startY + endY) / 2;
-
-                // Calculate the angle based on the vector from start to end
-                angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
-
-                // Apply position and rotation
-                arrowElement.style.left = `${arrowCenterX - arrowElement.offsetWidth / 2}px`;
-                arrowElement.style.top = `${arrowCenterY - arrowElement.offsetHeight / 2}px`;
-                arrowElement.style.transform = `rotate(${angle}deg)`;
-            });
-
-            // Adjust SVG size within the icon-container after they are added to the DOM
-            document.querySelectorAll('.icon-container svg').forEach(svg => {
-                svg.setAttribute('width', '48');
-                svg.setAttribute('height', '48');
-            });
-        }
+        // Adjust SVG size within the icon-container after they are added to the DOM
+        document.querySelectorAll('.icon-container svg').forEach(svg => {
+            svg.setAttribute('width', '48');
+            svg.setAttribute('height', '48');
+        });
 
         // Initial call and on window resize
-        window.addEventListener('load', updateArrowPositions);
-        window.addEventListener('resize', updateArrowPositions);
+        window.addEventListener('load', drawFlowPath);
+        window.addEventListener('resize', drawFlowPath);
     </script>
 </body>
 </html>
