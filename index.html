@@ -82,13 +82,6 @@
             animation: pulse-arrow 2s infinite ease-in-out;
         }
 
-        /* Adjust arrow rotation for mobile (vertical flow) */
-        @media (max-width: 767px) {
-            .animate-pulse-arrow {
-                transform: rotate(90deg); /* Rotate for vertical flow on mobile */
-            }
-        }
-
         /* Styling for the icon container within the tile */
         .icon-container {
             background-color: #fff; /* White background for the icon */
@@ -97,6 +90,13 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for the icon */
+        }
+
+        /* Specific styles for lifecycle arrows to allow JS control */
+        .lifecycle-arrow {
+            position: absolute; /* Position arrows absolutely for precise control */
+            z-index: 10; /* Ensure arrows are above tiles if needed */
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Smooth transitions */
         }
     </style>
 </head>
@@ -152,26 +152,38 @@
                 My passion extends to the tools and methodologies that bring data to life. I thrive on exploring and mastering technologies that enable robust data solutions.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="p-6 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out">
-                    <h3 class="text-2xl font-semibold text-blue-800 mb-3">Data Orchestration & Pipelines</h3>
+                <div class="relative p-6 pt-10 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out">
+                    <div class="icon-container absolute top-0 left-0 transform -translate-x-3/4 -translate-y-1/2 w-20 h-20 text-blue-600 border-2 border-blue-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-workflow"><path d="M5 8h14"/><path d="M5 16h14"/><path d="M11 12h-4"/><path d="M17 12h-2"/><path d="M11 8V6h3V8"/><path d="M11 16v2h3V16"/><path d="M17 16v2h3V16"/><path d="M17 8V6h3V8"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-blue-800 mb-2 mt-4">Data Orchestration & Pipelines</h3>
                     <p class="text-slate-700 leading-relaxed">
                         I enjoy building automated, resilient, and observable data pipelines that ensure seamless flow from source to consumption. The challenge of designing efficient data workflows, handling dependencies, and ensuring data freshness is particularly engaging.
                     </p>
                 </div>
-                <div class="p-6 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out">
-                    <h3 class="text-2xl font-semibold text-blue-800 mb-3">Data Modeling & Architecture</h3>
+                <div class="relative p-6 pt-10 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out">
+                    <div class="icon-container absolute top-0 left-0 transform -translate-x-3/4 -translate-y-1/2 w-20 h-20 text-blue-600 border-2 border-blue-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-box"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-blue-800 mb-2 mt-4">Data Modeling & Architecture</h3>
                     <p class="text-slate-700 leading-relaxed">
                         Designing intuitive and performant data models, whether for analytical or operational purposes, is a core interest. I'm passionate about crafting scalable data architectures that can evolve with changing business needs.
                     </p>
                 </div>
-                <div class="p-6 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out">
-                    <h3 class="text-2xl font-semibold text-blue-800 mb-3">Cloud Data Platforms</h3>
+                <div class="relative p-6 pt-10 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out">
+                    <div class="icon-container absolute top-0 left-0 transform -translate-x-3/4 -translate-y-1/2 w-20 h-20 text-blue-600 border-2 border-blue-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cloud"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-blue-800 mb-2 mt-4">Cloud Data Platforms</h3>
                     <p class="text-slate-700 leading-relaxed">
                         Leveraging the power of cloud ecosystems for scalable and elastic data solutions excites me. I'm keen on optimizing cloud resources for cost-efficiency and performance in data processing and storage.
                     </p>
                 </div>
-                <div class="p-6 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out">
-                    <h3 class="text-2xl font-semibold text-blue-800 mb-3">Code for Data</h3>
+                <div class="relative p-6 pt-10 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out">
+                    <div class="icon-container absolute top-0 left-0 transform -translate-x-3/4 -translate-y-1/2 w-20 h-20 text-blue-600 border-2 border-blue-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-blue-800 mb-2 mt-4">Code for Data</h3>
                     <p class="text-slate-700 leading-relaxed">
                         Writing clean, efficient, and maintainable code is fundamental to my approach. I appreciate the elegance of well-structured code that transforms, processes, and manages data effectively.
                     </p>
@@ -183,7 +195,7 @@
         <section class="mb-12 p-8 bg-white rounded-xl shadow-xl border border-slate-200 section-card">
             <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-8 border-b-4 border-blue-400 pb-3 text-center">The Data Engineering Lifecycle</h2>
 
-            <div id="lifecycle-container" class="flex flex-wrap justify-center items-center gap-y-8 gap-x-4">
+            <div id="lifecycle-container" class="flex flex-wrap justify-center items-center gap-y-8 gap-x-4 relative">
                 <!-- Tiles and Arrows will be dynamically inserted here by JavaScript -->
             </div>
         </section>
@@ -237,11 +249,12 @@
         ];
 
         const container = document.getElementById('lifecycle-container');
+        const arrows = []; // Store references to arrows
 
         dataEngineeringSteps.forEach((step, index) => {
             // Create tile element
             const tile = document.createElement('div');
-            tile.className = 'relative w-full sm:w-80 md:w-72 lg:w-64 p-6 pt-10 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-start text-left';
+            tile.className = 'relative w-full sm:w-80 md:w-72 lg:w-64 p-6 pt-10 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-start text-left lifecycle-tile'; // Added lifecycle-tile class
             tile.innerHTML = `
                 <div class="icon-container absolute top-0 left-0 transform -translate-x-3/4 -translate-y-1/2 w-20 h-20 text-blue-600 border-2 border-blue-300">
                     ${step.iconSvg}
@@ -254,22 +267,85 @@
             // Add arrow if not the last step
             if (index < dataEngineeringSteps.length - 1) {
                 const arrowContainer = document.createElement('div');
-                arrowContainer.className = 'flex items-center justify-center w-full md:w-auto my-4 md:my-0'; // Responsive sizing for arrow container
-                // SVG for the arrow
+                // Removed fixed rotation classes, will be handled by JS
+                arrowContainer.className = 'flex items-center justify-center w-full md:w-auto my-4 md:my-0 lifecycle-arrow';
                 arrowContainer.innerHTML = `
-                    <svg class="w-10 h-10 text-blue-600 animate-pulse-arrow md:rotate-0 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-10 h-10 text-blue-600 animate-pulse-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                     </svg>
                 `;
                 container.appendChild(arrowContainer);
+                arrows.push({ arrowElement: arrowContainer, prevTile: tile }); // Store arrow and its preceding tile
             }
         });
 
-        // Adjust SVG size within the icon-container after they are added to the DOM
-        document.querySelectorAll('.icon-container svg').forEach(svg => {
-            svg.setAttribute('width', '48');
-            svg.setAttribute('height', '48');
-        });
+        // Function to update arrow positions and rotations
+        function updateArrowPositions() {
+            arrows.forEach((arrowData, index) => {
+                const prevTile = arrowData.prevTile;
+                const nextTile = prevTile.nextElementSibling; // Get the next tile (skipping the arrow itself if it's there)
+
+                if (!nextTile || !nextTile.classList.contains('lifecycle-tile')) {
+                    // If there's no next tile or it's not a tile, hide the arrow
+                    arrowData.arrowElement.style.display = 'none';
+                    return;
+                } else {
+                    arrowData.arrowElement.style.display = 'flex'; // Ensure it's visible
+                }
+
+                const prevRect = prevTile.getBoundingClientRect();
+                const nextRect = nextTile.getBoundingClientRect();
+                const arrowElement = arrowData.arrowElement;
+                const svg = arrowElement.querySelector('svg');
+
+                // Determine if layout is horizontal (desktop) or vertical (mobile)
+                // We'll assume horizontal if the next tile's top is roughly the same as prev tile's top
+                // and vertical if next tile is significantly below prev tile.
+                const isHorizontalLayout = Math.abs(prevRect.top - nextRect.top) < 50; // Threshold for "same row"
+
+                let startX, startY, endX, endY;
+                let angle = 0;
+
+                if (isHorizontalLayout) {
+                    // Horizontal flow: from right of current tile to left of next tile
+                    startX = prevRect.right;
+                    startY = prevRect.top + prevRect.height / 2;
+                    endX = nextRect.left;
+                    endY = nextRect.top + nextRect.height / 2;
+
+                    angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+                    // Adjust for the arrow SVG's default orientation (pointing right)
+                    // No additional rotation needed if it's already pointing right.
+                } else {
+                    // Vertical flow: from bottom of current tile to top of next tile
+                    startX = prevRect.left + prevRect.width / 2;
+                    startY = prevRect.bottom;
+                    endX = nextRect.left + nextRect.width / 2;
+                    endY = nextRect.top;
+
+                    angle = 90; // Always point down for vertical flow
+                }
+
+                // Center the arrow between the start and end points
+                const arrowCenterX = (startX + endX) / 2;
+                const arrowCenterY = (startY + endY) / 2;
+
+                // Position the arrow container relative to the viewport
+                arrowElement.style.left = `${arrowCenterX - arrowElement.offsetWidth / 2}px`;
+                arrowElement.style.top = `${arrowCenterY - arrowElement.offsetHeight / 2}px`;
+                arrowElement.style.transform = `rotate(${angle}deg)`;
+
+                // Adjust SVG size within the icon-container after they are added to the DOM
+                document.querySelectorAll('.icon-container svg').forEach(svg => {
+                    svg.setAttribute('width', '48');
+                    svg.setAttribute('height', '48');
+                });
+            });
+        }
+
+        // Initial call and on window resize
+        window.addEventListener('load', updateArrowPositions);
+        window.addEventListener('resize', updateArrowPositions);
     </script>
 </body>
 </html>
