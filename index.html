@@ -236,16 +236,16 @@
 
     <script>
         const dataEngineeringSteps = [
-            { title: "Data Capture / Ingestion", description: "Bringing raw data into the system from various sources.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download-cloud"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m8 17 4 4 4-4"/></svg>' },
-            { title: "Streaming / Message Queueing", description: "Handling real-time data streams and asynchronous communication.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap"><path d="M4 14a1 1 0 0 1-.49-1.96l4-7.98a1 1 0 0 1 1.49-.02l4 7.98a1 1 0 0 1-.49 1.96l-4 7.98a1 1 0 0 1-1.49.02l-4-7.98Z"/><path d="M19 14a1 1 0 0 1-.49-1.96l4-7.98a1 1 0 0 1 1.49-.02l4 7.98a1 1 0 0 1-.49 1.96l-4 7.98a1 1 0 0 1-1.49.02l-4-7.98Z" style="transform: translateX(-12px);"/></svg>' },
-            { title: "Preprocessing / Cleansing", description: "Cleaning, validating, and preparing data for further use.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brush"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.07 8.07zm-.72.72 7.24 7.25m-6.48-6.48 1.74 1.74"/></svg>' },
-            { title: "Transformation / Processing", description: "Converting raw data into structured, usable formats.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-columns"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="12" x2="12" y1="3" y2="21"/></svg>' },
-            { title: "Storage / Data Lake / Data Warehouse", description: "Storing data efficiently for various analytical and operational needs.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12V19A9 3 0 0 0 21 19V12"/></svg>' },
-            { title: "Cataloging / Metadata Management", description: "Organizing and documenting data assets for discoverability.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>' },
-            { title: "Analytics / Query Layer", description: "Enabling data exploration and querying for insights.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>' },
-            { title: "Monitoring / Observability", description: "Tracking data pipelines and system health for reliability.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>' },
-            { title: "Security / Access Control", description: "Ensuring data privacy, integrity, and controlled access.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' },
-            { title: "Serving Layer / APIs", description: "Delivering processed data to applications and users.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>' }
+            { title: "Data Capture / Ingestion", description: "Passionately architecting the seamless flow of raw information from diverse origins into robust data ecosystems.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download-cloud"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m8 17 4 4 4-4"/></svg>' },
+            { title: "Streaming / Message Queueing", description: "Designing real-time conduits for instantaneous data flow, enabling agile responses and dynamic insights.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap"><path d="M4 14a1 1 0 0 1-.49-1.96l4-7.98a1 1 0 0 1 1.49-.02l4 7.98a1 1 0 0 1-.49 1.96l-4 7.98a1 1 0 0 1-1.49.02l-4-7.98Z"/><path d="M19 14a1 1 0 0 1-.49-1.96l4-7.98a1 1 0 0 1 1.49-.02l4 7.98a1 1 0 0 1-.49 1.96l-4 7.98a1 1 0 0 1-1.49.02l-4-7.98Z" style="transform: translateX(-12px);"/></svg>' },
+            { title: "Preprocessing / Cleansing", description: "Meticulously refining and validating raw data, transforming it into a trustworthy foundation for analysis.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brush"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.07 8.07zm-.72.72 7.24 7.25m-6.48-6.48 1.74 1.74"/></svg>' },
+            { title: "Transformation / Processing", description: "Crafting elegant processes to reshape and enrich data, unlocking its full potential for meaningful insights.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-columns"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="12" x2="12" y1="3" y2="21"/></svg>' },
+            { title: "Storage / Data Lake / Data Warehouse", description: "Strategically designing scalable repositories that ensure data is always accessible, organized, and optimized for its purpose.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12V19A9 3 0 0 0 21 19V12"/></svg>' },
+            { title: "Cataloging / Metadata Management", description: "Building intuitive data discovery mechanisms, ensuring every data asset is well-documented and easily understood.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>' },
+            { title: "Analytics / Query Layer", description: "Empowering users to explore and derive profound insights from complex datasets through efficient querying interfaces.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>' },
+            { title: "Monitoring / Observability", description: "Establishing vigilant systems to ensure data pipelines operate flawlessly, providing real-time visibility into data health.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>' },
+            { title: "Security / Access Control", description: "Implementing robust safeguards to protect data integrity and privacy, ensuring secure and compliant access for all stakeholders.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' },
+            { title: "Serving Layer / APIs", description: "Delivering refined data through intuitive interfaces and APIs, making information readily available for applications and decision-makers.", iconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>' }
         ];
 
         const container = document.getElementById('lifecycle-container');
@@ -254,7 +254,8 @@
         dataEngineeringSteps.forEach((step, index) => {
             // Create tile element
             const tile = document.createElement('div');
-            tile.className = 'relative w-full sm:w-80 md:w-72 lg:w-64 p-6 pt-10 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-start text-left lifecycle-tile'; // Added lifecycle-tile class
+            // Updated width and added min-height for consistent sizing
+            tile.className = 'relative w-full sm:w-[280px] p-6 pt-10 bg-blue-50 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-start text-left lifecycle-tile min-h-[240px]';
             tile.innerHTML = `
                 <div class="icon-container absolute top-0 left-0 transform -translate-x-3/4 -translate-y-1/2 w-20 h-20 text-blue-600 border-2 border-blue-300">
                     ${step.iconSvg}
@@ -267,7 +268,6 @@
             // Add arrow if not the last step
             if (index < dataEngineeringSteps.length - 1) {
                 const arrowContainer = document.createElement('div');
-                // Removed fixed rotation classes, will be handled by JS
                 arrowContainer.className = 'flex items-center justify-center w-full md:w-auto my-4 md:my-0 lifecycle-arrow';
                 arrowContainer.innerHTML = `
                     <svg class="w-10 h-10 text-blue-600 animate-pulse-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -281,12 +281,18 @@
 
         // Function to update arrow positions and rotations
         function updateArrowPositions() {
+            const containerRect = container.getBoundingClientRect(); // Get container's position once
+
             arrows.forEach((arrowData, index) => {
                 const prevTile = arrowData.prevTile;
-                const nextTile = prevTile.nextElementSibling; // Get the next tile (skipping the arrow itself if it's there)
+                // nextElementSibling might be another arrow, so find the next actual tile
+                let nextTile = prevTile.nextElementSibling;
+                while (nextTile && !nextTile.classList.contains('lifecycle-tile')) {
+                    nextTile = nextTile.nextElementSibling;
+                }
 
-                if (!nextTile || !nextTile.classList.contains('lifecycle-tile')) {
-                    // If there's no next tile or it's not a tile, hide the arrow
+                if (!nextTile) {
+                    // If there's no next tile, hide the arrow
                     arrowData.arrowElement.style.display = 'none';
                     return;
                 } else {
@@ -296,50 +302,51 @@
                 const prevRect = prevTile.getBoundingClientRect();
                 const nextRect = nextTile.getBoundingClientRect();
                 const arrowElement = arrowData.arrowElement;
-                const svg = arrowElement.querySelector('svg');
 
-                // Determine if layout is horizontal (desktop) or vertical (mobile)
-                // We'll assume horizontal if the next tile's top is roughly the same as prev tile's top
-                // and vertical if next tile is significantly below prev tile.
-                const isHorizontalLayout = Math.abs(prevRect.top - nextRect.top) < 50; // Threshold for "same row"
+                // Calculate centers relative to the lifecycle-container
+                const prevCenterX = (prevRect.left + prevRect.right) / 2 - containerRect.left;
+                const prevCenterY = (prevRect.top + prevRect.bottom) / 2 - containerRect.top;
+                const nextCenterX = (nextRect.left + nextRect.right) / 2 - containerRect.left;
+                const nextCenterY = (nextRect.top + nextRect.bottom) / 2 - containerRect.top;
 
                 let startX, startY, endX, endY;
                 let angle = 0;
 
+                // Determine if layout is horizontal (desktop) or vertical (mobile)
+                // Check if the next tile is roughly on the same horizontal line
+                const isHorizontalLayout = Math.abs(prevRect.top - nextRect.top) < 50; // Threshold for "same row"
+
                 if (isHorizontalLayout) {
                     // Horizontal flow: from right of current tile to left of next tile
-                    startX = prevRect.right;
-                    startY = prevRect.top + prevRect.height / 2;
-                    endX = nextRect.left;
-                    endY = nextRect.top + nextRect.height / 2;
-
-                    angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
-                    // Adjust for the arrow SVG's default orientation (pointing right)
-                    // No additional rotation needed if it's already pointing right.
+                    startX = prevRect.right - containerRect.left;
+                    startY = prevCenterY;
+                    endX = nextRect.left - containerRect.left;
+                    endY = nextCenterY;
                 } else {
                     // Vertical flow: from bottom of current tile to top of next tile
-                    startX = prevRect.left + prevRect.width / 2;
-                    startY = prevRect.bottom;
-                    endX = nextRect.left + nextRect.width / 2;
-                    endY = nextRect.top;
-
-                    angle = 90; // Always point down for vertical flow
+                    startX = prevCenterX;
+                    startY = prevRect.bottom - containerRect.top;
+                    endX = nextCenterX;
+                    endY = nextRect.top - containerRect.top;
                 }
 
-                // Center the arrow between the start and end points
+                // Calculate the midpoint for the arrow's position
                 const arrowCenterX = (startX + endX) / 2;
                 const arrowCenterY = (startY + endY) / 2;
 
-                // Position the arrow container relative to the viewport
+                // Calculate the angle based on the vector from start to end
+                angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+
+                // Apply position and rotation
                 arrowElement.style.left = `${arrowCenterX - arrowElement.offsetWidth / 2}px`;
                 arrowElement.style.top = `${arrowCenterY - arrowElement.offsetHeight / 2}px`;
                 arrowElement.style.transform = `rotate(${angle}deg)`;
+            });
 
-                // Adjust SVG size within the icon-container after they are added to the DOM
-                document.querySelectorAll('.icon-container svg').forEach(svg => {
-                    svg.setAttribute('width', '48');
-                    svg.setAttribute('height', '48');
-                });
+            // Adjust SVG size within the icon-container after they are added to the DOM
+            document.querySelectorAll('.icon-container svg').forEach(svg => {
+                svg.setAttribute('width', '48');
+                svg.setAttribute('height', '48');
             });
         }
 
