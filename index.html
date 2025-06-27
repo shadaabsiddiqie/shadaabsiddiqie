@@ -91,6 +91,11 @@
         .lifecycle-tile {
             min-height: 240px; /* Ensures consistent height for aesthetic alignment */
         }
+
+        /* Ensure SVG path is on top of tiles */
+        #flow-path-svg {
+            z-index: 20; /* Higher z-index to be above tiles */
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -192,11 +197,10 @@
                 <!-- Single SVG for the animated path -->
                 <svg id="flow-path-svg" class="absolute top-0 left-0 w-full h-full pointer-events-none" style="overflow: visible;">
                     <defs>
-                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-                            <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6" />
-                        </marker>
+                        <!-- Removed arrowhead marker definition -->
                     </defs>
-                    <path id="flow-path" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-start="url(#arrowhead)"></path>
+                    <!-- Removed marker-end attribute from path -->
+                    <path id="flow-path" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
                 <!-- Tiles will be dynamically inserted here by JavaScript -->
             </div>
@@ -216,7 +220,7 @@
                     </svg>
                     GitHub
                 </a>
-                <a href="https://www.linkedin.com/in/shadaab-siddiqie/" target="_blank" rel="noopener noreferrer"
+                <a href="https://www.linkedin.com/in/shadaabsiddiqie/" target="_blank" rel="noopener noreferrer"
                    class="inline-flex items-center px-8 py-4 bg-blue-700 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
                     <svg class="w-7 h-7 mr-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M20.5 2h-17A2.5 2.5 0 001 4.5v15A2.5 2.5 0 003.5 22h17a2.5 2.5 0 002.5-2.5v-15A2.5 2.5 0 0020.5 2zM8 19H5v-9h3zm-1.5-9A1.5 1.5 0 115 8.5a1.5 1.5 0 011.5 1.5zm13 9h-3v-4.5c0-1.24-.02-2.83-1.72-2.83-1.73 0-2 1.34-2 2.75V19h-3V9h3v1.39h.04c.45-.85 1.56-1.72 3.42-1.72 3.66 0 4.34 2.41 4.34 5.59z" />
@@ -310,7 +314,7 @@
             pathElement.style.animation = 'none'; // Reset animation
             void pathElement.offsetWidth; // Trigger reflow
             pathElement.style.setProperty('--path-length', length); // Set CSS variable for animation
-            pathElement.style.animation = `draw-path 4s ease-in-out infinite`; // Adjust duration as needed
+            pathElement.style.animation = `draw-path 4s ease-in-out infinite forwards`; // Added 'forwards' to keep final state
         }
 
         // Dynamically add tiles
