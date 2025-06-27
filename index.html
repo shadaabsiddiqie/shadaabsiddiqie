@@ -80,17 +80,7 @@
         /* Specific styles for lifecycle tiles */
         .lifecycle-tile {
             min-height: 240px; /* Ensures consistent height for aesthetic alignment */
-            z-index: 10; /* Ensure tiles are above the SVG path */
-            position: relative; /* Needed for z-index to work */
-        }
-
-        /* Ensure SVG path is on top of tiles */
-        #flow-path-svg {
-            z-index: 15; /* Higher z-index to be above tiles */
-        }
-        #moving-arrow {
-            z-index: 20; /* Arrow should always be on top */
-            position: absolute; /* Positioned relative to the SVG parent */
+            /* Removed z-index and position: relative; as they are no longer needed for SVG overlay */
         }
     </style>
 </head>
@@ -190,12 +180,7 @@
             <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-8 border-b-4 border-blue-400 pb-3 text-center">The Data Engineering Lifecycle</h2>
 
             <div id="lifecycle-container" class="flex flex-wrap justify-center items-center gap-y-8 gap-x-4 relative">
-                <!-- Single SVG for the animated path -->
-                <svg id="flow-path-svg" class="absolute top-0 left-0 w-full h-full pointer-events-none" style="overflow: visible;">
-                    <path id="flow-path" fill="none" stroke="#3b82f6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
-                    <!-- Moving arrow element with sharper tip -->
-                    <polygon id="moving-arrow" points="0 0, 20 5, 0 10" fill="#3b82f6" transform-origin="center center"></polygon>
-                </svg>
+                <!-- Removed SVG for the animated path and moving arrow -->
                 <!-- Tiles will be dynamically inserted here by JavaScript -->
             </div>
         </section>
@@ -250,115 +235,6 @@
 
         const container = document.getElementById('lifecycle-container');
 
-        // Function to draw and animate the single flow path
-        function drawFlowPath() {
-            const pathElement = document.getElementById('flow-path');
-            const movingArrow = document.getElementById('moving-arrow');
-            const tiles = Array.from(document.querySelectorAll('.lifecycle-tile'));
-            const containerRect = container.getBoundingClientRect();
-
-            if (tiles.length === 0) {
-                pathElement.setAttribute('d', ''); // Clear path if no tiles
-                movingArrow.style.display = 'none';
-                return;
-            }
-
-            let pathData = "";
-            let prevIconCenterX, prevIconCenterY;
-            const curveOffset = 30; // Offset for more pronounced curves
-
-            tiles.forEach((tile, index) => {
-                const iconContainer = tile.querySelector('.icon-container');
-                if (!iconContainer) return;
-
-                const iconRect = iconContainer.getBoundingClientRect();
-
-                // Calculate center of the icon container relative to the lifecycle-container
-                const currentIconCenterX = (iconRect.left + iconRect.right) / 2 - containerRect.left;
-                const currentIconCenterY = (iconRect.top + iconRect.bottom) / 2 - containerRect.top;
-
-                if (index === 0) {
-                    pathData = `M ${currentIconCenterX} ${currentIconCenterY}`;
-                } else {
-                    const isHorizontal = Math.abs(prevIconCenterY - currentIconCenterY) < 60;
-
-                    if (isHorizontal) {
-                        const controlX = (prevIconCenterX + currentIconCenterX) / 2;
-                        const controlY = prevIconCenterY + (index % 2 === 0 ? curveOffset : -curveOffset);
-                        pathData += ` Q ${controlX} ${controlY}, ${currentIconCenterX} ${currentIconCenterY}`;
-                    } else {
-                        pathData += ` L ${currentIconCenterX} ${currentIconCenterY}`;
-                    }
-                }
-
-                prevIconCenterX = currentIconCenterX;
-                prevIconCenterY = currentIconCenterY;
-            });
-
-            pathElement.setAttribute('d', pathData);
-
-            const totalLength = pathElement.getTotalLength();
-            const segmentLength = 100; // Fixed length of the visible ray segment
-            const animationDuration = 4800; // 4.8 seconds for one full cycle
-
-            // This creates one visible segment of `segmentLength` and a gap that fills the rest of the path.
-            pathElement.style.strokeDasharray = `${segmentLength} ${totalLength - segmentLength}`;
-
-            let startTime;
-
-            function animateFlow(currentTime) {
-                if (!startTime) startTime = currentTime;
-                const elapsed = currentTime - startTime;
-                const progress = (elapsed % animationDuration) / animationDuration;
-
-                // The stroke-dashoffset controls the starting point of the dash pattern.
-                // We want the dash to move from the very left (offset 0) to fully off the right.
-                // So, the offset should go from 0 to totalLength + segmentLength.
-                const animatedOffset = progress * (totalLength + segmentLength);
-                pathElement.style.strokeDashoffset = -animatedOffset; // Negative to move from left to right
-
-                // The position of the arrow should be at the leading edge of the visible segment.
-                // The leading edge is at `animatedOffset`.
-                let arrowPathLength = animatedOffset;
-
-                // Hide the arrow when it's off the path
-                if (arrowPathLength < 0 || arrowPathLength > totalLength) {
-                    movingArrow.style.display = 'none';
-                } else {
-                    movingArrow.style.display = 'block';
-                    const point = pathElement.getPointAtLength(arrowPathLength);
-
-                    // Manually calculate tangent for rotation
-                    let prevPoint;
-                    const delta = 0.1; // Small delta for tangent calculation
-                    if (arrowPathLength - delta >= 0) {
-                        prevPoint = pathElement.getPointAtLength(arrowPathLength - delta);
-                    } else if (arrowPathLength + delta <= totalLength) { // If near start, look slightly ahead
-                        prevPoint = pathElement.getPointAtLength(arrowPathLength + delta);
-                    } else { // Very short path, default to horizontal
-                        prevPoint = { x: point.x - 1, y: point.y };
-                    }
-
-                    const tangentX = point.x - prevPoint.x;
-                    const tangentY = point.y - prevPoint.y;
-
-                    const angle = Math.atan2(tangentY, tangentX) * 180 / Math.PI;
-
-                    // Position the arrow. The polygon's tip is at (20, 5) in its own coordinate system.
-                    // We translate it so its tip aligns with 'point'.
-                    movingArrow.setAttribute('transform', `translate(${point.x - 20} ${point.y - 5}) rotate(${angle})`);
-                }
-
-                requestAnimationFrame(animateFlow);
-            }
-
-            // Start the animation only if there are tiles
-            if (tiles.length > 0) {
-                startTime = null; // Reset start time for new animation cycle
-                requestAnimationFrame(animateFlow);
-            }
-        }
-
         // Dynamically add tiles
         dataEngineeringSteps.forEach((step, index) => {
             const tile = document.createElement('div');
@@ -379,9 +255,7 @@
             svg.setAttribute('height', '48');
         });
 
-        // Initial call and on window resize
-        window.addEventListener('load', drawFlowPath);
-        window.addEventListener('resize', drawFlowPath);
+        // Removed event listeners for drawFlowPath
     </script>
 </body>
 </html>
